@@ -13,15 +13,15 @@ import DefaultCounterCard from "examples/Cards/CounterCards/DefaultCounterCard";
 
 function Counters() {
   return (
-    <MKBox component="section" py={3}>
+    <MKBox component="section" py={4}>
       <Container>
         <Grid container item xs={12} lg={9} sx={{ mx: "auto" }}>
           <Grid item xs={12} md={4}>
             <DefaultCounterCard
               count={70}
               suffix="+"
-              title="Coded Elements"
-              description="From buttons, to inputs, navbars, alerts or cards, you are covered"
+              title="Registered Members"
+              description="For this moment we have this number of members to maintain their health"
             />
           </Grid>
           <Grid item xs={12} md={4} display="flex">
@@ -29,16 +29,16 @@ function Counters() {
             <DefaultCounterCard
               count={15}
               suffix="+"
-              title="Design Blocks"
-              description="Mix the sections, change the colors and unleash your creativity"
+              title="Pending appointments"
+              description="This number of pending appointments are waiting to be completed"
             />
             <Divider orientation="vertical" sx={{ display: { xs: "none", md: "block" }, ml: 0 }} />
           </Grid>
           <Grid item xs={12} md={4}>
             <DefaultCounterCard
               count={4}
-              title="Pages"
-              description="Save 3-4 weeks of work when you use our pre-made pages for your website"
+              title="Completed appointments"
+              description="We already completed this number of appointments succesfully"
             />
           </Grid>
         </Grid>

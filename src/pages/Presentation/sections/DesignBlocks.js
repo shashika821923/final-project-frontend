@@ -20,18 +20,8 @@ import data from "pages/Presentation/sections/data/designBlocksData";
 
 function DesignBlocks() {
   const renderData = data.map(({ title, description, items }) => (
-    <Grid container spacing={3} sx={{ mb: 10 }} key={title}>
-      <Grid item xs={12} lg={3}>
-        <MKBox position="sticky" top="100px" pb={{ xs: 2, lg: 6 }}>
-          <MKTypography variant="h3" fontWeight="bold" mb={1}>
-            {title}
-          </MKTypography>
-          <MKTypography variant="body2" fontWeight="regular" color="secondary" mb={1} pr={2}>
-            {description}
-          </MKTypography>
-        </MKBox>
-      </Grid>
-      <Grid item xs={12} lg={9}>
+    <Grid container sx={{ mb: 10 }} key={title}>
+      <Grid item xs={12} lg={12}>
         <Grid container spacing={3}>
           {items.map(({ image, name, count, route, pro }) => (
             <Grid item xs={12} md={4} sx={{ mb: 2 }} key={name}>
@@ -52,24 +42,23 @@ function DesignBlocks() {
           container
           item
           xs={12}
-          lg={6}
+          lg={12}
           flexDirection="column"
           alignItems="center"
-          sx={{ textAlign: "center", my: 6, mx: "auto", px: 0.75 }}
+          sx={{ textAlign: "center", mx: "auto", px: 0.25 }}
         >
           <MKBadge
             variant="contained"
             color="info"
-            badgeContent="Infinite combinations"
+            badgeContent="Keep updated !"
             container
             sx={{ mb: 2 }}
           />
           <MKTypography variant="h2" fontWeight="bold">
-            Huge collection of sections
+            Huge collection of blog posts
           </MKTypography>
           <MKTypography variant="body1" color="text">
-            We have created multiple options for you to put together and customise into pixel
-            perfect pages.
+           The latest and top blogs on our bloging 
           </MKTypography>
         </Grid>
       </Container>

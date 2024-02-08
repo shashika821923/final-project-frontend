@@ -14,36 +14,36 @@ import RotatingCardBack from "examples/Cards/RotatingCard/RotatingCardBack";
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 
 // Images
-import bgFront from "assets/images/rotating-card-bg-front.jpeg";
-import bgBack from "assets/images/rotating-card-bg-back.jpeg";
+import bgFront from "assets/images/rotating-card-bg-front.jpg";
+import bgBack from "assets/images/rotating-card-bg-back.jpg";
 
 function Information() {
   return (
-    <MKBox component="section" py={6} my={6}>
+    <MKBox component="section" py={6} my={3}>
       <Container>
         <Grid container item xs={11} spacing={3} alignItems="center" sx={{ mx: "auto" }}>
           <Grid item xs={12} lg={4} sx={{ mx: "auto" }}>
             <RotatingCard>
               <RotatingCardFront
                 image={bgFront}
-                icon="touch_app"
+                icon="AccessibilityIcon "
                 title={
                   <>
-                    Feel the
+                    Feel the changes
                     <br />
-                    Material Kit
+                    of our trainings
                   </>
                 }
-                description="All the MUI components that you need in a development have been re-design with the new look."
+                description="We are always welcome the new members to feel the real fitness with us."
               />
               <RotatingCardBack
                 image={bgBack}
-                title="Discover More"
-                description="You will save a lot of time going from prototyping to full-functional code because all elements are implemented."
+                title={<>Book your first appointment <br/> now!</>}
+                description="Create a new user account in few easy steps and book your first appoinment with us!"
                 action={{
                   type: "internal",
-                  route: "/sections/page-sections/page-headers",
-                  label: "start with header",
+                  route: "/pages/authentication/sign-in",
+                  label: "Signup here",
                 }}
               />
             </RotatingCard>
@@ -53,16 +53,15 @@ function Information() {
               <Grid item xs={12} md={6}>
                 <DefaultInfoCard
                   icon="content_copy"
-                  title="Full Documentation"
-                  description="Built by developers for developers. Check the foundation and you will find
-                    everything inside our documentation."
+                  title="Customized meal plans"
+                  description="Great news! we are using latest AI technolgies to suggest the best meal plans to you according to your weight and height."
                 />
               </Grid>
               <Grid item xs={12} md={6}>
                 <DefaultInfoCard
                   icon="flip_to_front"
-                  title="MUI Ready"
-                  description="The world's most popular react components library for building user interfaces."
+                  title="Expert Instructors"
+                  description="We are selected best instructors for you to provide a best service for you after few round of interviews."
                 />
               </Grid>
             </Grid>
@@ -70,15 +69,15 @@ function Information() {
               <Grid item xs={12} md={6}>
                 <DefaultInfoCard
                   icon="price_change"
-                  title="Save Time & Money"
-                  description="Creating your design from scratch with dedicated designers can be very expensive. Start with our Design System."
+                  title="Easy appointment handlings"
+                  description="Here we go! we have fully web based appointments handling system to provide you a better service now you can add our appointment from any wahre at any time."
                 />
               </Grid>
               <Grid item xs={12} md={6}>
                 <DefaultInfoCard
                   icon="devices"
-                  title="Fully Responsive"
-                  description="Regardless of the screen size, the website content will naturally fit the given resolution."
+                  title="Keep updated with new trends"
+                  description="In this fitness subject there are lot of things every day updating we have ablogging section to share new updates within our members."
                 />
               </Grid>
             </Grid>
