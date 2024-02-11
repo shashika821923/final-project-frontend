@@ -1,108 +1,179 @@
-// CopyRights for sse
+import { Button } from "@mui/material";
+import { Modal, notification, Select, Table } from "antd";
+import { useEffect, useState } from "react";
+import { decodeToken } from "configs/jwtTokenImplementations";
+import { UserType } from "configs/enums/userTypes";
+import AppointmentForm from "../addblog";
+import { appointmentServices } from "../SignIn/services";
+import moment from "moment";
 
-// @mui material components
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
+function AppointmentsListing() {
+    const [appointments, setAppointments] = useState([]);
+    const [userType, setUserType] = useState(0);
+    const [isModalOpen, setIsModelOpen] = useState(false);
+    const [selectedAppointment, setSelectedAppointment] = useState(null);
+    const [api, contextHolder] = notification.useNotification();
+    const [filters, setFilters] = useState({status: '1'});
 
-// Material Kit 2 React components
-import MKBox from "components/MKBox";
-import MKTypography from "components/MKTypography";
+    useEffect(() => {
+        // Decode JWT token and retrieve user type
+        const token = localStorage.getItem("token");
+        if (token) {
+            const decodedToken = decodeToken(token);
+            setUserType(decodedToken.userType);
+        }
 
-// Material Kit 2 React examples
-import DefaultReviewCard from "examples/Cards/ReviewCards/DefaultReviewCard";
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import routes from "routes";
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-import { useState } from "react";
+        // Fetch appointments
+        fetchAppointments();
+    }, []);
 
-function AppointmentListing() {
+    useEffect(() => {
+        fetchAppointments();
+    }, [filters]);
 
-    const [appointments, setAppointments] = useState([{
-        color: "info",
-        name: "Shailesh Kushwaha",
-        date: "1 week ago",
-        review: "I found solution to all my design needs from Creative Tim. I use them as a freelancer in my hobby projects for fun! And its really affordable, very humble guys !!!",
-        rating: 5,
-    },{
-        color: "info",
-        name: "Shailesh Kushwaha",
-        date: "1 week ago",
-        review: "I found solution to all my design needs from Creative Tim. I use them as a freelancer in my hobby projects for fun! And its really affordable, very humble guys !!!",
-        rating: 5,
-    },{
-        color: "info",
-        name: "Shailesh Kushwaha",
-        date: "1 week ago",
-        review: "I found solution to all my design needs from Creative Tim. I use them as a freelancer in my hobby projects for fun! And its really affordable, very humble guys !!!",
-        rating: 5,
-    },{
-        color: "info",
-        name: "Shailesh Kushwaha",
-        date: "1 week ago",
-        review: "I found solution to all my design needs from Creative Tim. I use them as a freelancer in my hobby projects for fun! And its really affordable, very humble guys !!!",
-        rating: 5,
-    },{
-        color: "info",
-        name: "Shailesh Kushwaha",
-        date: "1 week ago",
-        review: "I found solution to all my design needs from Creative Tim. I use them as a freelancer in my hobby projects for fun! And its really affordable, very humble guys !!!",
-        rating: 5,
-    }])
+    const columns = [
+        {
+            title: 'Appointment ID',
+            dataIndex: 'appointmentId',
+            key: 'appointmentId',
+        },
+        // {
+        //   title: 'User ID',
+        //   dataIndex: 'userId',
+        //   key: 'userId',
+        // },
+        {
+            title: 'Date',
+            key: 'date',
+            render: (text, record) => (
+                <>
+                    {moment(record.date).format("MMM Do YY")}
+                </>
+            ),
+        },
+        {
+            title: 'Time',
+            key: 'time',
+            render: (text, record) => {
+                return (<>
+                    {record.time.split('T')[1].split('.')[0]}
+                </>)
+            },
+        },
+        {
+            title: 'First Name',
+            dataIndex: 'firstName',
+            key: 'firstName',
+        },
+        {
+            title: 'Second Name',
+            dataIndex: 'secondName',
+            key: 'secondName',
+        },
+        // {
+        //   title: 'Is Deleted',
+        //   dataIndex: 'isDeleted',
+        //   key: 'isDeleted',
+        // },
+        {
+          title: 'Is Approved',
+          key: 'isApproved', render: (text, record) => {
+            return (<>
+                {record.isApproved ? 'Approved': 'Pending'}
+            </>)
+        },
+        },
+        // {
+        //   title: 'Is Completed',
+        //   dataIndex: 'isCompleted',
+        //   key: 'isCompleted',
+        // },
+    ];
+
+    if (userType === UserType.ADMIN) {
+        columns.push({
+            title: 'Actions',
+            key: 'actions',
+            render: (text, record) => (
+                <>
+                    {!record.isCompleted && !record.isDeleted && <Button variant="contained" color="primary" onClick={() => handleEdit(record)}>Edit</Button>}
+                    {!record.isApproved && !record.isCompleted && !record.isDeleted && <Button variant="contained" color="primary" onClick={() => approveAppointment(record.appointmentId)}>Approve</Button>}
+                    {record.isApproved && !record.isCompleted && !record.isDeleted &&  <Button variant="contained" color="primary" onClick={() => completeAppointment(record.appointmentId)}>Complete</Button>}
+                    {!record.isCompleted && !record.isDeleted && <Button variant="contained" color="error" onClick={() => deleteAppointment(record.appointmentId)}>Delete</Button>}
+                </>
+            ),
+        });
+    }
+
+    const handleEdit = (record) => {
+        setSelectedAppointment(record);
+        setIsModelOpen(true);
+    };
+
+    const fetchAppointments = () => {
+        appointmentServices.getAllAppointments(filters).then((appointmentList) => setAppointments(appointmentList.data));
+    };
+
+    const approveAppointment = (appointmentId) => {
+        appointmentServices.approveAppointment({appointmentId}).then(() => { openNotification(); fetchAppointments(); });
+    }
+
+    const completeAppointment = (appointmentId) => {
+        appointmentServices.completeAppointment({appointmentId}).then(() => { openNotification(); fetchAppointments(); });
+    }
+
+    const deleteAppointment = (appointmentId) => {
+        appointmentServices.deleteAppointment({appointmentId}).then(() => { openNotification(); fetchAppointments(); });
+    }
+
+    const openNotification = () => {
+        api.success({
+          message: 'Success fully completed !',
+          description: 'Your action successfully completed',
+          duration: 0,
+        });
+      };
 
     return (
         <>
-            <DefaultNavbar
-                routes={routes}
-                action={{
-                    type: "external",
-                    route: "https://www.Lords-Gym.com/",
-                    label: "Sign in",
-                    color: "info",
+            {contextHolder}
+            <Select
+                defaultValue="1"
+                style={{
+                    width: '100%',
+                    marginBottom: '10px'
                 }}
-                transparent
-                light
+                onChange={(selected) => setFilters({...filters, ...{status: selected}}) }
+                options={[
+                    {
+                        value: '1',
+                        label: 'Approved',
+                    },
+                    {
+                        value: '2',
+                        label: 'Pending',
+                    },
+                    {
+                        value: '3',
+                        label: 'Completed',
+                    },
+                    {
+                        value: '4',
+                        label: 'Deleted',
+                    },
+                ]}
             />
-            <MKBox
-                position="absolute"
-                top={0}
-                left={0}
-                zIndex={1}
-                width="100%"
-                minHeight="100vh"
-                sx={{
-                    backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
-                        `${linearGradient(
-                            rgba(gradients.dark.main, 0.6),
-                            rgba(gradients.dark.state, 0.6)
-                        )}, url(${bgImage})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                }}
-            />
-            <MKBox px={1} py={20} width="100%" height="100vh" mx="auto" position="relative" zIndex={2}>
-                <MKBox component="section" py={0}>
-                    <Container>
-                        <Grid container spacing={3} sx={{ mt: 2 }}>
-                            {appointments.map((item) => <Grid item xs={12} md={6} lg={4}>
-                                <DefaultReviewCard
-                                    color={item.color}
-                                    name={item.name}
-                                    date={item.date}
-                                    review={item.review}
-                                    rating={item.rating}
-                                />
-                            </Grid>)}
-                        </Grid>
-                        <Divider sx={{ my: 6 }} />
-                    </Container>
-                </MKBox>
-            </MKBox>
+            {/* Render the table with appointments as dataSource */}
+            <Table dataSource={appointments} columns={columns} />
 
+            {selectedAppointment != null && (
+                <Modal title="Edit Appointment" visible={isModalOpen} onCancel={() => setIsModelOpen(false)} footer={null}>
+                    {/* Render the edit form with selected appointment data */}
+                    <AppointmentForm appointmentId={selectedAppointment.appointmentId} />
+                </Modal>
+            )}
         </>
-
     );
 }
 
-export default AppointmentListing;
+export default AppointmentsListing;

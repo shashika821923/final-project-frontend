@@ -1,92 +1,105 @@
-
-import Card from "@mui/material/Card";
-import Grid from "@mui/material/Grid";
 import MKBox from "components/MKBox";
-import MKTypography from "components/MKTypography";
 import MKInput from "components/MKInput";
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-import SimpleFooter from "examples/Footers/SimpleFooter";
-import routes from "routes";
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import MKButton from "components/MKButton";
+import { useEffect } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { notification } from "antd";
+import PropTypes from 'prop-types';
+import { appointmentServices } from "../SignIn/services";
+import { decodeToken } from "configs/jwtTokenImplementations";
+import { getToken } from "configs/jwtTokenImplementations";
+import moment from "moment";
 
-function AddBlogPost() {
+const validationSchema = Yup.object().shape({
+  date: Yup.date().required("Date is required"),
+  time: Yup.string().required("Time is required"),
+});
 
-    return (
-        <>
-            <DefaultNavbar
-                routes={routes}
-                action={{
-                    type: "external",
-                    route: "https://www.Lords-Gym.com/",
-                    label: "Sign in",
-                    color: "info",
-                }}
-                transparent
-                light
-            />
-            <MKBox
-                position="absolute"
-                top={0}
-                left={0}
-                zIndex={1}
-                width="100%"
-                minHeight="100vh"
-                sx={{
-                    backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
-                        `${linearGradient(
-                            rgba(gradients.dark.main, 0.6),
-                            rgba(gradients.dark.state, 0.6)
-                        )}, url(${bgImage})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                }}
-            />
-            <MKBox px={1} width="100%" height="100vh" mx="auto" position="relative" zIndex={2}>
-                <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
-                    <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
-                        <Card>
-                            <MKBox
-                                variant="gradient"
-                                bgColor="info"
-                                borderRadius="lg"
-                                coloredShadow="info"
-                                mx={2}
-                                mt={-3}
-                                p={2}
-                                mb={1}
-                                textAlign="center"
-                            >
-                                <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                                    Add new blog post
-                                </MKTypography>
-                            </MKBox>
-                            <MKBox pt={4} pb={3} px={3}>
-                                <MKBox component="form" role="form">
-                                    <MKBox mb={2}>
-                                        <MKInput type="date" label="Date" value="2018-11-23" fullWidth />
-                                    </MKBox>
-                                    <MKBox mb={2}>
-                                        <MKInput type="time" label="Time" value="10:30:00" fullWidth />
-                                    </MKBox>
-                                    <MKBox mb={2}>
-                                        <MKInput type="text" label="Description" fullWidth />
-                                    </MKBox>
-                                    <MKBox mb={2}>
-                                        <MKButton color="info" fullWidth>Save</MKButton>
-                                    </MKBox>
-                                </MKBox>
-                            </MKBox>
-                        </Card>
-                    </Grid>
-                </Grid>
-            </MKBox>
-            <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
-                <SimpleFooter light />
-            </MKBox>
-        </>
-    );
+function AppointmentForm({ appointmentId }) {
+  const [api, contextHolder] = notification.useNotification();
+  const token = getToken()
+  
+  useEffect(() => {
+    if (appointmentId > 0) {
+      appointmentServices.getAppointment({ appointmentId }).then((appointment) => {
+        ;
+        const { date, time } = appointment.data[0];
+        const formattedDate = moment(date).format('YYYY-MM-DD');
+        formik.setValues({
+          ...formik.values,
+          date: formattedDate,
+          time: time.split('T')[1].split('.')[0],
+        });
+      });
+    }
+  }, [appointmentId]);
+
+
+  
+  
+  const formik = useFormik({
+    initialValues: {
+      userId: decodeToken(token).userId,
+      date: "",
+      time: "",
+      appointmentId: appointmentId
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+        ;
+      ((appointmentId > 0) ? appointmentServices.updateAppointment(values) : appointmentServices.addNewAppointment(values)).then((data) => { openNotification(); });
+    },
+  });
+
+  const openNotification = () => {
+    api.success({
+      message: 'Success fully added !',
+      description: 'Your appointment is successfully created!',
+      duration: 0,
+    });
+  };
+  
+  return (
+    <>
+      {contextHolder}
+      <form onSubmit={formik.handleSubmit}>
+        <MKBox mb={2}>
+          <MKInput
+            type="date"
+            label="Date"
+            fullWidth
+            name="date"
+            value={formik.values.date}
+            onChange={formik.handleChange}
+            error={formik.touched.date && Boolean(formik.errors.date)}
+            helperText={formik.touched.date && formik.errors.date}
+          />
+        </MKBox>
+        <MKBox mb={2}>
+          <MKInput
+            type="time"
+            label="Time"
+            fullWidth
+            name="time"
+            value={formik.values.time}
+            onChange={formik.handleChange}
+            error={formik.touched.time && Boolean(formik.errors.time)}
+            helperText={formik.touched.time && formik.errors.time}
+          />
+        </MKBox>
+        <MKBox mt={4} mb={1}>
+          <MKButton type="submit" variant="gradient" color="info" fullWidth>
+           {(appointmentId > 0) ? 'Update' : 'Add Appointment'}
+          </MKButton>
+        </MKBox>
+      </form>
+    </>
+  )
 }
 
-export default AddBlogPost;
+AppointmentForm.propTypes = {
+  appointmentId: PropTypes.number
+};
+
+export default AppointmentForm;

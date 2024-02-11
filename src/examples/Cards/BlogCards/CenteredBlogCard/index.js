@@ -17,34 +17,34 @@ import MKButton from "components/MKButton";
 
 function CenteredBlogCard({ image, title, description, action }) {
   return (
-    <Card>
+    <Card style={{marginLeft: '10px', backgroundColor: '#EDE9E9'}}>
       <MKBox position="relative" borderRadius="lg" mx={2} mt={-3}>
         <MKBox
-          component="img"
-          src={image}
-          alt={title}
-          borderRadius="lg"
-          width="100%"
           position="relative"
-          zIndex={1}
-        />
-        <MKBox
-          borderRadius="lg"
-          shadow="md"
-          width="100%"
-          height="100%"
-          position="absolute"
-          left={0}
-          top={0}
-          sx={{
-            backgroundImage: `url(${image})`,
-            transform: "scale(0.94)",
-            filter: "blur(12px)",
-            backgroundSize: "cover",
-          }}
-        />
+          width={450} // Specify your desired width
+          height={200} // Specify your desired height
+        >
+          <MKBox
+            borderRadius="lg"
+            shadow="md"
+            position="absolute"
+            left={0}
+            top={30}
+            sx={{
+              width: '100%',
+              height: '100%',
+              backgroundImage: `url(${image})`,
+              backgroundSize: "contain", // Set the background size to 'contain'
+              backgroundRepeat: "no-repeat", // Prevent the background image from repeating
+              backgroundPosition: "center", // Center the background image
+              transform: "scale(0.94)",
+              // filter: "blur(2px)",
+            }}
+          />
+        </MKBox>
+
       </MKBox>
-      <MKBox p={3} mt={-1} textAlign="center">
+      <MKBox p={3} mt={2} textAlign="center">
         <MKTypography display="inline" variant="h5" textTransform="capitalize" fontWeight="regular">
           {title}
         </MKTypography>

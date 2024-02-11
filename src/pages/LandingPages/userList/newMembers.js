@@ -6,7 +6,7 @@ import { decodeToken } from "configs/jwtTokenImplementations";
 import SigningForm from "../SignIn/form";
 import { UserType } from "configs/enums/userTypes";
 
-function UserListing() {
+function NewMembersList() {
   const [userDetails, setUserDetails] = useState([]);
   const [userType, setUserType] = useState(0);
   const [isModalOpen, setIsModelOpen] = useState(false);
@@ -88,7 +88,7 @@ function UserListing() {
       key: 'actions',
       render: (text, record) => (
         <>
-          <Button variant="contained" color="primary" onClick={() => handleEdit(record)}>Edit</Button>
+          <Button variant="contained" color="primary" onClick={() => handleEdit(record)}>Accept</Button>
           <Button variant="contained" color="error" onClick={() => handleDelete(record.userId)}>Delete</Button>
         </>
       ),
@@ -96,12 +96,11 @@ function UserListing() {
   }
 
   const handleEdit = (record) => {
-    setSelecteduser(record);
-    setIsModelOpen(true);
+    userInfoService.acceptUser({userID: record.userId}).then(() => openNotification())
   };
 
   const fetchUserInfo = (record) => {
-    userInfoService.getAllUsers().then((userList) => setUserDetails(userList.data));
+    userInfoService.newMemberShipRequets().then((userList) => setUserDetails(userList.data));
   };
 
   const handleDelete = (userId) => {
@@ -132,4 +131,4 @@ function UserListing() {
   );
 }
 
-export default UserListing;
+export default NewMembersList;

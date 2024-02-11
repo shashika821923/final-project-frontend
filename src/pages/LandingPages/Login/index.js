@@ -9,8 +9,44 @@ import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import SimpleFooter from "examples/Footers/SimpleFooter";
 import routes from "routes";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { userInfoService } from "../SignIn/services";
+import { storeToken } from "configs/jwtTokenImplementations";
+
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().min(5).required("Password is required"),
+});
 
 function LoginForm() {
+
+  const redirectToPath = (path) => {
+    window.location.href = path;
+  };
+
+  // Example usage: redirect to '/dashboard' path
+  const handleRedirect = () => {
+    redirectToPath('/');
+  };
+  
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      userInfoService.loginUser(formik.values).then((jwtToken) => {
+        if (jwtToken.data.success) {
+          storeToken(jwtToken.data.token)
+          handleRedirect();
+        }
+      })
+    },
+  });
 
   return (
     <>
@@ -63,15 +99,35 @@ function LoginForm() {
                 </MKTypography>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>
-                <MKBox component="form" role="form">
+                <form onSubmit={formik.handleSubmit}>
                   <MKBox mb={2}>
-                    <MKInput type="email" label="Email" fullWidth />
+                    <MKInput
+                      type="email"
+                      label="Email"
+                      fullWidth
+                      name="email"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={formik.touched.email && Boolean(formik.errors.email)}
+                      helperText={formik.touched.email && formik.errors.email}
+                    />
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput type="password" label="Password" fullWidth />
+                    <MKInput
+                      type="password"
+                      label="Password"
+                      fullWidth
+                      name="password"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={formik.touched.password && Boolean(formik.errors.password)}
+                      helperText={formik.touched.password && formik.errors.password}
+                    />
                   </MKBox>
                   <MKBox mt={4} mb={1}>
-                    <MKButton variant="gradient" color="info" fullWidth>
+                    <MKButton type="submit" variant="gradient" color="info" fullWidth>
                       Sign In
                     </MKButton>
                   </MKBox>
@@ -90,7 +146,7 @@ function LoginForm() {
                       </MKTypography>
                     </MKTypography>
                   </MKBox>
-                </MKBox>
+                </form>
               </MKBox>
             </Card>
           </Grid>

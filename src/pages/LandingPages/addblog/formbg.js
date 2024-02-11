@@ -1,25 +1,15 @@
-import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
-import MKInput from "components/MKInput";
-import MKButton from "components/MKButton";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import SimpleFooter from "examples/Footers/SimpleFooter";
 import routes from "routes";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-import { useEffect, useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { userInfoService } from "./services";
-import MKAlert from "components/MKAlert";
-import { notification } from "antd";
 import PropTypes from 'prop-types';
-import SigningForm from "./form";
+import AppointmentForm from ".";
 
-function SignInBasic({ userID }) {
-
+function AddAppointmentMain({ appointmentId }) {
 
   return (
     <>
@@ -68,11 +58,11 @@ function SignInBasic({ userID }) {
                 textAlign="center"
               >
                 <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                  Sign Up
+                  Add appointment
                 </MKTypography>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>
-                <SigningForm userID={userID}/>
+                <AppointmentForm appointmentId={appointmentId}/>
               </MKBox>
             </Card>
           </Grid>
@@ -85,10 +75,10 @@ function SignInBasic({ userID }) {
   );
 }
 
-SignInBasic.propTypes = {
+AddAppointmentMain.propTypes = {
   userID: PropTypes.number
 };
 
-export default SignInBasic;
+export default AddAppointmentMain;
 
 
