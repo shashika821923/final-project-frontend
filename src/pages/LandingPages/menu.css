@@ -1,0 +1,19 @@
+.flex-container{
+    display: flex;
+    gap:15px;
+}
+
+.side-menu{
+    flex-basis: 18%;
+    height: 100vh;
+    background: #fff;
+}
+.component-container{
+    flex-basis: 82%;
+    padding-top: 75px;
+    padding-right: 20px;
+}
+
+.side-menu > ul{
+    margin-top: 75px;
+}

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { decodeToken } from "configs/jwtTokenImplementations";
 import { getToken } from "configs/jwtTokenImplementations";
 import AWS from 'aws-sdk';
-import { appointmentServices, blogPostService } from "../SignIn/services";
+import { blogPostService } from "../SignIn/services";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -23,7 +23,6 @@ function AddBlogPost({ blogPostId }) {
   const [selectedImage, setSelectedImage] = useState(null);
   
   useEffect(() => {
-    // If you have any initial data fetching for editing a blog post, you can put it here
   }, [blogPostId]);
   
   const formik = useFormik({

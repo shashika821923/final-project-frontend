@@ -87,10 +87,10 @@ function UserListing() {
       title: 'Actions',
       key: 'actions',
       render: (text, record) => (
-        <>
+        <div style={{display:'flex',gap:'5px'}}>
           <Button variant="contained" color="primary" onClick={() => handleEdit(record)}>Edit</Button>
           <Button variant="contained" color="error" onClick={() => handleDelete(record.userId)}>Delete</Button>
-        </>
+        </div>
       ),
     });
   }

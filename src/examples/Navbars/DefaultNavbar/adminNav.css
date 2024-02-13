@@ -1,0 +1,14 @@
+.MuiBox-root{
+    /*background-color: red !important;*/
+}
+
+.admin-header .MuiContainer-root{
+    margin-left: unset !important;
+    margin-right: unset !important;
+}
+
+.admin-header .MuiContainer-root .css-1yv1dw1{
+width:100vw;
+margin: 0;
+border-radius: 0px;
+}

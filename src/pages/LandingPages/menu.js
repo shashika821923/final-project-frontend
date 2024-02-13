@@ -1,6 +1,6 @@
-import { AppstoreOutlined, MailOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
-import { Box, Grid, Button } from "@mui/material";
-import { Menu, Modal, Table, notification } from "antd";
+import { AppstoreOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
+import { Box, Grid } from "@mui/material";
+import { Menu } from "antd";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import routes from "routes";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
@@ -9,13 +9,15 @@ import UserListing from "./userList";
 import NewMembersList from "./userList/newMembers";
 import SigningForm from "./SignIn/form";
 import AppointmentsListing from "./appointments";
+import DefaultNavbarAdmin from "examples/Navbars/DefaultNavbar/adminNavBar";
+import './menu.css';
 
 export default function MenuHome() {
     const [selectedKey, setSelectedKey] = useState(['1']);
     const [renderComponent, setRenderComponent] = useState();
 
     useEffect(() => {
-        onClick({key: selectedKey[0]});
+        onClick({ key: selectedKey[0] });
     }, [])
 
     function getItem(label, key, icon, children, type) {
@@ -76,8 +78,9 @@ export default function MenuHome() {
 
     return (
         <>
-            <DefaultNavbar
+            <DefaultNavbarAdmin
                 routes={routes}
+                className='header-inner'
                 action={{
                     type: "external",
                     route: "https://www.Lords-Gym.com/",
@@ -106,31 +109,38 @@ export default function MenuHome() {
                     height="100%"
                     position="relative"
                     zIndex={2}
+                    padding={'unset'}
                     sx={{
                         overflowY: 'auto',
                     }}
                 >
-                    <Grid container spacing={3}>
+                    <div className="flex-container">
+                        <div className="side-menu">
+                                <Menu
+                                    onClick={onClick}
+                                    style={{
+                                        width: '100%', // Adjusted width for responsiveness
+                                    }}
+                                    defaultSelectedKeys={selectedKey}
+                                    defaultOpenKeys={['sub1', 'sub2', 'sub3', 'sub4']}
+                                    mode="inline"
+                                    items={items}
+                                />
+                            </div>
+                            <div className="component-container">
+                                 {renderComponent}
+                            </div>
+                     </div>      
+                    {/* <Grid container spacing={3}>
                         <Grid item xs={12} md={4} lg={2}>
-                            <Menu
-                                onClick={onClick}
-                                style={{
-                                    width: '100%', // Adjusted width for responsiveness
-                                }}
-                                defaultSelectedKeys={selectedKey}
-                                defaultOpenKeys={['sub1', 'sub2', 'sub3', 'sub4']}
-                                mode="inline"
-                                items={items}
-                            />
+                            
                         </Grid>
                         <Grid item xs={12} pr={4} md={8} lg={10}>
-                                {renderComponent}
+                            
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                 </Box>
-
             </Box>
         </>
-
     )
 }

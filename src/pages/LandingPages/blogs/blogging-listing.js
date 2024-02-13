@@ -5,17 +5,10 @@ import Container from "@mui/material/Container";
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 import MKButton from "components/MKButton";
-
 // Material Kit 2 React examples
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-
-// About Us page sections
-import Information from "pages/LandingPages/AboutUs/sections/Information";
-
 // Routes
 import routes from "routes";
-
-
 // Images
 import bgImage from "assets/images/bg-about-us.jpg";
 import CenteredBlogCard from "examples/Cards/BlogCards/CenteredBlogCard";

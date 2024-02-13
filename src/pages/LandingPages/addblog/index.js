@@ -34,8 +34,6 @@ function AppointmentForm({ appointmentId }) {
       });
     }
   }, [appointmentId]);
-
-
   
   
   const formik = useFormik({
