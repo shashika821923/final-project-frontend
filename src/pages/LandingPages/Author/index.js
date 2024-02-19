@@ -63,9 +63,7 @@ function Author() {
           }}
         >
           <Profile />
-          <Posts />
         </Card>
-        <Contact />
         <Footer />
       </MKBox>
     </>

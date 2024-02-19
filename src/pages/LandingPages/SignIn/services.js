@@ -133,4 +133,24 @@ function getAllBlogPosts(appointmentDetails) {
         (error) => console.log(error));
 }
 
+export const attendanceServices = {
+    getFilteredAttendancesList
+}
+
+
+function getFilteredAttendancesList(filters) {
+    return axios.post(`${config.api.endpoint}/attendance/getAllAttendance`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
+export const emailPromotions = {
+    sendPromoEmails
+}
+
+function sendPromoEmails(filters) {
+    return axios.post(`${config.api.endpoint}/promotions/promotionSend`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
 

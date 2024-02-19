@@ -11,6 +11,8 @@ import SigningForm from "./SignIn/form";
 import AppointmentsListing from "./appointments";
 import DefaultNavbarAdmin from "examples/Navbars/DefaultNavbar/adminNavBar";
 import './menu.css';
+import AttendanceListing from "./attendanceList";
+import CreatePromotionEmail from "./promotionVillas";
 
 export default function MenuHome() {
     const [selectedKey, setSelectedKey] = useState(['1']);
@@ -48,7 +50,15 @@ export default function MenuHome() {
                 setSelectedKey(['5']);
                 setRenderComponent(<AppointmentsListing />);
                 break
-            default:
+            case '13':
+                setSelectedKey(['13']);
+                setRenderComponent(<AttendanceListing />);
+                break
+            case '9':
+                setSelectedKey(['13']);
+                setRenderComponent(<CreatePromotionEmail />);
+                break
+        default:
                 return window.location.href = '/';
         }
     };
@@ -67,13 +77,13 @@ export default function MenuHome() {
         {
             type: 'divider',
         },
-        getItem('Navigation Three', 'sub4', <SettingOutlined />, [
-            getItem('Comming soon', '9'),
+        getItem('Promotions', 'sub4', <SettingOutlined />, [
+            getItem('Email Promotions', '9'),
             getItem('Comming soon', '10'),
             getItem('Comming soon', '11'),
             getItem('Comming soon', '12'),
         ]),
-        getItem('Group', 'grp', null, [getItem('Comming soon', '13'), getItem('Comming soon', '14')], 'group'),
+        getItem('Attendance', 'grp', null, [getItem('Attendance List', '13'), getItem('Comming soon', '14')], 'group'),
     ];
 
     return (

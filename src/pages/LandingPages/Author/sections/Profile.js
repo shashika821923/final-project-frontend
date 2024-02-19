@@ -25,12 +25,10 @@ function Profile() {
           <Grid container justifyContent="center" py={6}>
             <Grid item xs={12} md={7} mx={{ xs: "auto", sm: 6, md: 1 }}>
               <MKBox display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                <MKTypography variant="h3">Michael Roven</MKTypography>
-                <MKButton variant="outlined" color="info" size="small">
-                  Follow
-                </MKButton>
+                <MKTypography variant="h3">About us from owner</MKTypography>
+
               </MKBox>
-              <Grid container spacing={3} mb={3}>
+              {/* <Grid container spacing={3} mb={3}>
                 <Grid item>
                   <MKTypography component="span" variant="body2" fontWeight="bold">
                     323&nbsp;
@@ -55,11 +53,9 @@ function Profile() {
                     Following
                   </MKTypography>
                 </Grid>
-              </Grid>
+              </Grid> */}
               <MKTypography variant="body1" fontWeight="light" color="text">
-                Decisions: If you can&apos;t decide, the answer is no. If two equally difficult
-                paths, choose the one more painful in the short term (pain avoidance is creating an
-                illusion of equality). Choose the path that leaves you more equanimous. <br />
+              Welcome to Fit Fusion! We're more than just a gym – we're your ultimate fitness partner. Our mission is to empower you to reach your health and wellness goals through personalized training sessions, AI-driven meal plans, and a supportive community. With our innovative gym management system, you'll have everything you need to succeed on your fitness journey. Join us today and experience the difference at Fit Fusion!
                 <MKTypography
                   component="a"
                   href="#"
@@ -82,7 +78,6 @@ function Profile() {
                     },
                   }}
                 >
-                  More about me <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
                 </MKTypography>
               </MKTypography>
             </Grid>

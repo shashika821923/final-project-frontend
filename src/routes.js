@@ -25,12 +25,12 @@ const routes = [
         name: "landing pages",
         collapse: [
           {
-            name: "About us",
+            name: "Trainers",
             route: "/pages/landing-pages/about-us",
             component: <AboutUs />,
           },
           {
-            name: "Trainers",
+            name: "About us",
             route: "/pages/landing-pages/author",
             component: <Author />,
           },
@@ -66,11 +66,6 @@ if(decodeToken(getToken()).userType === UserType.USER ){
         route: "/pages/admin/adminPanel",
         component: <MenuHome />,
       },
-      {
-        name: "Add appointment",
-        route: "/pages/appointments/addAppointments",
-        component: <AddAppointmentMain />,
-      },
     ],
   })
 }
@@ -89,6 +84,17 @@ if(decodeToken(getToken()) != null){
         name: "Blog listing",
         route: "/pages/blog/bloggingPost",
         component: <BlogListing />,
+      },
+      
+    ],
+  },
+  {
+    name: "Appontments ",
+    collapse: [
+      {
+        name: "Add appointment",
+        route: "/pages/appointments/addAppointments",
+        component: <AddAppointmentMain />,
       },
     ],
   })
