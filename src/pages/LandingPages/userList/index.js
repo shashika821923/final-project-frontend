@@ -5,6 +5,9 @@ import { userInfoService } from "../SignIn/services";
 import { decodeToken } from "configs/jwtTokenImplementations";
 import SigningForm from "../SignIn/form";
 import { UserType } from "configs/enums/userTypes";
+import { userTypes } from "configs/enums/userTypes";
+import PaymentsForm from "../payments/payments.form";
+import PaymentListing from "../payments/payments.listing";
 
 function UserListing() {
   const [userDetails, setUserDetails] = useState([]);
@@ -12,6 +15,9 @@ function UserListing() {
   const [isModalOpen, setIsModelOpen] = useState(false);
   const [selectedUser, setSelecteduser] = useState(0);
   const [api, contextHolder] = notification.useNotification();
+  const [isPaymentModelOpen, setIsPaymentModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [isPaymentHistorModalOpen, setIsPaymentHistoryModalOpen] = useState(null);
 
   useEffect(() => {
     // Fetch user details from the server
@@ -77,8 +83,13 @@ function UserListing() {
     // },
     {
       title: 'User Type',
-      dataIndex: 'usertype',
       key: 'usertype',
+      render: (text, record) => {
+        return (<div style={{display:'flex',gap:'5px'}}>
+          <span>{userTypes.find(x => x.typeId === record.usertype).name}</span>
+        </div>
+      )
+    }
     },
   ];
 
@@ -89,7 +100,9 @@ function UserListing() {
       render: (text, record) => (
         <div style={{display:'flex',gap:'5px'}}>
           <Button variant="contained" color="primary" onClick={() => handleEdit(record)}>Edit</Button>
-          <Button variant="contained" color="error" onClick={() => handleDelete(record.userId)}>Delete</Button>
+          <Button variant="contained" color="primary" style={{marginLeft: '5 px'}} onClick={() => handelAddPayment(record.userId)}>Add a payment</Button>
+          <Button variant="contained" color="primary" style={{marginLeft: '5 px'}} onClick={() => handelPaymentHistory(record.userId)}>View payments</Button>
+          <Button variant="contained" color="error" style={{marginLeft: '5 px'}} onClick={() => handleDelete(record.userId)}>Delete</Button>
         </div>
       ),
     });
@@ -109,6 +122,17 @@ function UserListing() {
     console.log("Delete user with ID:", userId);
   };
 
+  const handelAddPayment = (userId) => {
+    setSelectedUserId(userId);
+    setIsPaymentModalOpen(true);
+  }
+
+  const handelPaymentHistory = (userId) => {
+    setSelectedUserId(userId);
+    setIsPaymentHistoryModalOpen(true);
+  }
+
+
   const openNotification = () => {
     api.success({
       message: 'Success fully added !',
@@ -127,6 +151,13 @@ function UserListing() {
 
       {selectedUser != null && <Modal title="Basic Modal" open={isModalOpen} footer={null} onCancel={() => { setIsModelOpen(false); setSelecteduser(null) }}>
         <SigningForm userID={selectedUser.userId} />
+      </Modal>}
+      {isPaymentModelOpen && selectedUserId && <Modal title="Basic Modal" open={isPaymentModelOpen} footer={null} onCancel={() => { setIsPaymentModalOpen(false); }}>
+        <PaymentsForm closeForm={selectedUser.userId} userId={selectedUserId} />
+      </Modal>}
+
+      {isPaymentHistorModalOpen && selectedUserId && <Modal title="Basic Modal" open={isPaymentHistorModalOpen} footer={null} onCancel={() => { setIsPaymentHistoryModalOpen(false); }}>
+        <PaymentListing  userId={selectedUserId} />
       </Modal>}
     </>
   );

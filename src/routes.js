@@ -55,7 +55,6 @@ const routes = [
   },
 ];
 
-console.log('token', decodeToken(getToken()))
 
 if(decodeToken(getToken()).userType === UserType.USER ){
   routes[0].collapse.push( {

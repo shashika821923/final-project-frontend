@@ -16,7 +16,7 @@ const validationSchema = Yup.object().shape({
   time: Yup.string().required("Time is required"),
 });
 
-function AppointmentForm({ appointmentId }) {
+function AppointmentForm({ appointmentId, closeForm }) {
   const [api, contextHolder] = notification.useNotification();
   const token = getToken()
   
@@ -45,15 +45,14 @@ function AppointmentForm({ appointmentId }) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-        ;
-      ((appointmentId > 0) ? appointmentServices.updateAppointment(values) : appointmentServices.addNewAppointment(values)).then((data) => { openNotification(); });
+      ((appointmentId > 0) ? appointmentServices.updateAppointment(values) : appointmentServices.addNewAppointment(values)).then((data) => { openNotification(); closeForm && closeForm();});
     },
   });
 
   const openNotification = () => {
     api.success({
-      message: 'Success fully added !',
-      description: 'Your appointment is successfully created!',
+      message: appointmentId ? 'Successfully Updated'  : 'Success fully added !',
+      description: appointmentId ? 'Successfully appointment updated' :  'Your appointment is successfully created!',
       duration: 0,
     });
   };
@@ -97,7 +96,8 @@ function AppointmentForm({ appointmentId }) {
 }
 
 AppointmentForm.propTypes = {
-  appointmentId: PropTypes.number
+  appointmentId: PropTypes.number,
+  closeForm: PropTypes.func
 };
 
 export default AppointmentForm;

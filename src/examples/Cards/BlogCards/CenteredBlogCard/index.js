@@ -17,7 +17,7 @@ import MKButton from "components/MKButton";
 
 function CenteredBlogCard({ image, title, description, action }) {
   return (
-    <Card style={{marginLeft: '10px', backgroundColor: '#EDE9E9'}}>
+    <Card style={{ marginLeft: '10px', backgroundColor: '#EDE9E9' }}>
       <MKBox position="relative" borderRadius="lg" mx={2} mt={-3}>
         <MKBox
           position="relative"
@@ -42,7 +42,6 @@ function CenteredBlogCard({ image, title, description, action }) {
             }}
           />
         </MKBox>
-
       </MKBox>
       <MKBox p={3} mt={2} textAlign="center">
         <MKTypography display="inline" variant="h5" textTransform="capitalize" fontWeight="regular">

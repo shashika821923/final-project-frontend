@@ -5,6 +5,7 @@ import { userInfoService } from "../SignIn/services";
 import { decodeToken } from "configs/jwtTokenImplementations";
 import SigningForm from "../SignIn/form";
 import { UserType } from "configs/enums/userTypes";
+import PaymentsForm from "../payments/payments.form";
 
 function NewMembersList() {
   const [userDetails, setUserDetails] = useState([]);
@@ -12,6 +13,7 @@ function NewMembersList() {
   const [isModalOpen, setIsModelOpen] = useState(false);
   const [selectedUser, setSelecteduser] = useState(0);
   const [api, contextHolder] = notification.useNotification();
+
 
   useEffect(() => {
     // Fetch user details from the server
@@ -105,7 +107,6 @@ function NewMembersList() {
 
   const handleDelete = (userId) => {
     userInfoService.deleteUser({userID: userId}).then(() => {fetchUserInfo(); openNotification(); })
-    console.log("Delete user with ID:", userId);
   };
 
   const openNotification = () => {
@@ -124,9 +125,10 @@ function NewMembersList() {
       {/* Render the table with userDetails as dataSource */}
       <Table dataSource={userDetails} columns={columns} />
 
-      {selectedUser != null && <Modal title="Basic Modal" open={isModalOpen} footer={null} onCancel={() => { setIsModelOpen(false); setSelecteduser(null) }}>
+      {isModalOpen && <Modal title="Basic Modal" open={isModalOpen} footer={null} onCancel={() => { setIsModelOpen(false); setSelecteduser(null) }}>
         <SigningForm userID={selectedUser.userId} />
       </Modal>}
+      
     </>
   );
 }

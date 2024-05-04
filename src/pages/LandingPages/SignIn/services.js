@@ -154,3 +154,22 @@ function sendPromoEmails(filters) {
         (error) => console.log(error));
 }
 
+export const payments = {
+    addNewPayments,
+    getPaymentsByUserId
+}
+
+function addNewPayments(filters) {
+    return axios.post(`${config.api.endpoint}/payments/addPayment`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
+function getPaymentsByUserId(filters) {
+    return axios.post(`${config.api.endpoint}/payments/getPayments`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
+
+

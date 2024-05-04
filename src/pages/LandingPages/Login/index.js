@@ -136,7 +136,7 @@ function LoginForm() {
                       Don&apos;t have an account?{" "}
                       <MKTypography
                         component={Link}
-                        to="/authentication/sign-up/cover"
+                        to="/pages/authentication/sign-in"
                         variant="button"
                         color="info"
                         fontWeight="medium"

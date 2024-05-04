@@ -169,7 +169,7 @@ function AppointmentsListing() {
             {selectedAppointment != null && (
                 <Modal title="Edit Appointment" visible={isModalOpen} onCancel={() => setIsModelOpen(false)} footer={null}>
                     {/* Render the edit form with selected appointment data */}
-                    <AppointmentForm appointmentId={selectedAppointment.appointmentId} />
+                    <AppointmentForm appointmentId={selectedAppointment.appointmentId} closeForm={() => {setIsModelOpen(false); fetchAppointments();}}/>
                 </Modal>
             )}
         </>

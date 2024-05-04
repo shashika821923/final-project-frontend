@@ -34,8 +34,8 @@ function Presentation() {
         routes={routes}
         action={{
           type: "internal",
-          route: "/pages/authentication/sign-in",
-          label: "Sign Up",
+          route: "/pages/authentication/log-in",
+          label: "Sign In",
           color: "info",
         }}
         sticky
