@@ -14,7 +14,7 @@ const date = new Date().getFullYear();
 
 export default {
   brand: {
-    name: "Material Kit 2",
+    name: "Lord's Gym",
     image: logoCT,
     route: "/",
   },
@@ -22,14 +22,6 @@ export default {
     {
       icon: <FacebookIcon />,
       link: "https://www.facebook.com/CreativeTim/",
-    },
-    {
-      icon: <TwitterIcon />,
-      link: "https://twitter.com/creativetim",
-    },
-    {
-      icon: <GitHubIcon />,
-      link: "https://github.com/creativetimofficial",
     },
     {
       icon: <YouTubeIcon />,
@@ -83,7 +75,7 @@ export default {
         variant="button"
         fontWeight="regular"
       >
-        Creative Tim
+       Lord's Gym
       </MKTypography>
       .
     </MKTypography>

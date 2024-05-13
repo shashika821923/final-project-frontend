@@ -145,7 +145,9 @@ function getFilteredAttendancesList(filters) {
 }
 
 export const emailPromotions = {
-    sendPromoEmails
+    sendPromoEmails,
+    saveReview,
+    getAllReviews
 }
 
 function sendPromoEmails(filters) {
@@ -154,13 +156,33 @@ function sendPromoEmails(filters) {
         (error) => console.log(error));
 }
 
+function saveReview(filters) {
+    return axios.post(`${config.api.endpoint}/promotions/addreview`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
+function getAllReviews(filters) {
+    return axios.post(`${config.api.endpoint}/promotions/getAllReviews`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
+
 export const payments = {
     addNewPayments,
-    getPaymentsByUserId
+    getPaymentsByUserId,
+    notifyPayments
 }
 
 function addNewPayments(filters) {
     return axios.post(`${config.api.endpoint}/payments/addPayment`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
+function notifyPayments(filters) {
+    return axios.post(`${config.api.endpoint}/payments/notifyPayments`, filters).then(
         (data) => data,
         (error) => console.log(error));
 }
@@ -171,5 +193,44 @@ function getPaymentsByUserId(filters) {
         (error) => console.log(error));
 }
 
+export const equipmentServices = {
+    addNewEquipment,
+    getAllEquipments,
+    updateEquipment,
+    getEquipment,
+    deleteEquipment
+}
+
+
+function addNewEquipment(filters) {
+    return axios.post(`${config.api.endpoint}/equipments/addEquipment`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
+function getAllEquipments(filters) {
+    return axios.post(`${config.api.endpoint}/equipments/getAll`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
+function updateEquipment(filters) {
+    return axios.post(`${config.api.endpoint}/equipments/updateEquipment`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
+function getEquipment(filters) {
+    return axios.post(`${config.api.endpoint}/equipments/getEquipment`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
+
+function deleteEquipment(filters) {
+    return axios.post(`${config.api.endpoint}/equipments/deleteEquipment`, filters).then(
+        (data) => data,
+        (error) => console.log(error));
+}
 
 

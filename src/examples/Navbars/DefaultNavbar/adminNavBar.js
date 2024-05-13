@@ -541,7 +541,7 @@ function DefaultNavbarAdmin ({ brand, routes, transparent, light, action, sticky
 
 // Setting default values for the props of DefaultNavbar
 DefaultNavbarAdmin.defaultProps = {
-  brand: "Material Kit 2",
+  brand: "Lord's Gym",
   transparent: false,
   light: false,
   action: false,

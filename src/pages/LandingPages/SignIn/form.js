@@ -38,6 +38,7 @@ function SigningForm({ userID }) {
         height: user.data.height || "",
         email: user.data.email || "",
         password: user.data.password || "",
+        mealPlan:  user.data.mealPlan || "",
         userId: userID
       }));
   
@@ -170,13 +171,23 @@ function SigningForm({ userID }) {
               helperText={formik.touched.password && formik.errors.password}
             />
           </MKBox>}
+          {userID > 0 && <MKBox mb={2}>
+            <MKInput
+              multiline
+              rows={5}
+              label="Meal plan"
+              fullWidth
+              name="mealPlan"
+              value={formik.values.mealPlan}
+            />
+          </MKBox>}
           <MKBox mt={4} mb={1}>
             <MKButton type="submit" variant="gradient" color="info" fullWidth>
              {(userID > 0) ? 'Update' : 'Sign Up'}
             </MKButton>
           </MKBox>
           <MKBox mt={3} mb={1} textAlign="center">
-            {(userID > 0) && <MKTypography variant="button" color="text">
+            {!(userID > 0) && <MKTypography variant="button" color="text">
               Don&apos;t have an account?{" "}
               <MKTypography
                 component={Link}

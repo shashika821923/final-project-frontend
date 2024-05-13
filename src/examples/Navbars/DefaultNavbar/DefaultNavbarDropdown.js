@@ -13,6 +13,7 @@ import Icon from "@mui/material/Icon";
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
 function DefaultNavbarDropdown({
   name,
@@ -69,9 +70,7 @@ function DefaultNavbarDropdown({
           {name}
         </MKTypography>
         <MKTypography variant="body2" color={light ? "white" : "dark"} ml="auto">
-          <Icon sx={{ fontWeight: "normal", verticalAlign: "middle" }}>
-            {collapse && "keyboard_arrow_down"}
-          </Icon>
+            {!collapse ? <ArrowUpOutlined />: <ArrowDownOutlined />}
         </MKTypography>
       </MKBox>
       {children && (

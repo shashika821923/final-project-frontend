@@ -8,11 +8,12 @@ import MKButton from "components/MKButton";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import SimpleFooter from "examples/Footers/SimpleFooter";
 import routes from "routes";
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/bg-sign-in-basic.jpg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { userInfoService } from "../SignIn/services";
 import { storeToken } from "configs/jwtTokenImplementations";
+import { notification } from "antd";
 
 
 const validationSchema = Yup.object().shape({
@@ -21,7 +22,7 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginForm() {
-
+  const [api, contextHolder] = notification.useNotification();
   const redirectToPath = (path) => {
     window.location.href = path;
   };
@@ -43,13 +44,25 @@ function LoginForm() {
         if (jwtToken.data.success) {
           storeToken(jwtToken.data.token)
           handleRedirect();
+        }else{
+          openNotification();
         }
       })
     },
   });
 
+  const openNotification = () => {
+    api.error({
+      message: 'Login Failed!',
+      description:
+        'Your username or password is incorrect',
+      duration: 0,
+    });
+  };
+
   return (
     <>
+     {contextHolder}
       <DefaultNavbar
         routes={routes}
         action={{

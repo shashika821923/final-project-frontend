@@ -5,7 +5,7 @@ import MKTypography from "components/MKTypography";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import SimpleFooter from "examples/Footers/SimpleFooter";
 import routes from "routes";
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/bg-sign-in-basic.jpg";
 import PropTypes from 'prop-types';
 import SigningForm from "./form";
 import AddBlogPost from "./form";

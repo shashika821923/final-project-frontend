@@ -92,10 +92,10 @@ function Presentation() {
       >
         <Counters />
         <Information />
-        <DesignBlocks />
+        {/* <DesignBlocks /> */}
         <Testimonials />
         <MKBox >
-          <Container>
+          {/* <Container>
             <Grid container spacing={0}>
               <Grid item xs={12} lg={5} ml="auto" sx={{ textAlign: { xs: "center", lg: "left" } }}>
               </Grid>
@@ -138,7 +138,7 @@ function Presentation() {
                 </MKSocialButton>
               </Grid>
             </Grid>
-          </Container>
+          </Container> */}
         </MKBox>
       </Card>
       <MKBox pt={6} px={1} mt={6}>

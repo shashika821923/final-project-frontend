@@ -55,9 +55,6 @@ function SimpleFooter({ company, links, light }) {
         >
           &copy; {new Date().getFullYear()}, made with
           <MKBox fontSize={size.md} color={light ? "white" : "text"} mb={-0.5} mx={0.25}>
-            <Icon color="inherit" fontSize="inherit">
-              favorite
-            </Icon>
           </MKBox>
           by
           <Link href={href} target="_blank">
@@ -93,9 +90,9 @@ function SimpleFooter({ company, links, light }) {
 
 // Setting default values for the props of SimpleFooter
 SimpleFooter.defaultProps = {
-  company: { href: "https://www.Lords-Gym.com/", name: "Creative Tim" },
+  company: { href: "https://www.Lords-Gym.com/", name: "Lord's Gym"},
   links: [
-    { href: "https://www.Lords-Gym.com/", name: "Creative Tim" },
+    { href: "https://www.Lords-Gym.com/", name: "Lord's Gym" },
     { href: "https://www.Lords-Gym.com/presentation", name: "About Us" },
     { href: "https://www.Lords-Gym.com/blog", name: "Blog" },
     { href: "https://www.Lords-Gym.com/license", name: "License" },

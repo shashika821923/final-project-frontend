@@ -8,7 +8,7 @@ import MKButton from "components/MKButton";
 import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import SimpleFooter from "examples/Footers/SimpleFooter";
 import routes from "routes";
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/bg-sign-in-basic.jpg";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -28,7 +28,7 @@ function SignInBasic({ userID }) {
         action={{
           type: "external",
           route: "/pages/authentication/log-in",
-          label: "Sign in",
+          label: userID ?  "Edit User" : "Sign in",
           color: "info",
         }}
         transparent
@@ -68,7 +68,7 @@ function SignInBasic({ userID }) {
                 textAlign="center"
               >
                 <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                  Sign Up
+                  {userID ? 'Edit User' : 'Sign Up'}
                 </MKTypography>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>

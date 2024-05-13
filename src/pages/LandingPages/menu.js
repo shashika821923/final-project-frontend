@@ -1,13 +1,14 @@
 import {
   AppstoreOutlined,
   SettingOutlined,
+  ToolOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Box, Grid } from "@mui/material";
 import { Menu } from "antd";
 import Card from "@mui/material/Card";
 import routes from "routes";
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/bg-sign-in-basic.jpg";
 import { useEffect, useState } from "react";
 import UserListing from "./userList";
 import NewMembersList from "./userList/newMembers";
@@ -19,6 +20,10 @@ import AttendanceListing from "./attendanceList";
 import CreatePromotionEmail from "./promotionVillas";
 import PaymentsForm from "./payments/payments.form";
 import MKBox from "components/MKBox";
+import NotifyPayment from "./payments/paymentsnotify";
+import { CheckOutlined } from "@mui/icons-material";
+import EquipmentForm from "./equipments/form";
+import EquipmentListing from "./equipments/listing";
 
 export default function MenuHome() {
   const [selectedKey, setSelectedKey] = useState(["1"]);
@@ -66,7 +71,15 @@ export default function MenuHome() {
         break;
       case "6":
         setSelectedKey(["6"]);
-        setRenderComponent(<PaymentsForm />);
+        setRenderComponent(<NotifyPayment />);
+        break;
+      case "14":
+        setSelectedKey(["14"]);
+        setRenderComponent(<EquipmentForm />);
+        break;
+      case "15":
+        setSelectedKey(["14"]);
+        setRenderComponent(<EquipmentListing />);
         break;
       default:
         return (window.location.href = "/");
@@ -81,27 +94,37 @@ export default function MenuHome() {
     ]),
     getItem("Appointments Two", "sub2", <AppstoreOutlined />, [
       getItem("Appointments listing", "5"),
-      getItem("Payments listing", "6"),
-      getItem("Comming soon", "sub3", null, [
-        getItem("Comming soon", "7"),
-        getItem("Comming soon", "8"),
-      ]),
+      getItem("Payments Notify", "6"),
+      // getItem("Comming soon", "sub3", null, [
+      //   getItem("Comming soon", "7"),
+      //   getItem("Comming soon", "8"),
+      // ]),
     ]),
     {
       type: "divider",
     },
     getItem("Promotions", "sub4", <SettingOutlined />, [
       getItem("Email Promotions", "9"),
-      getItem("Comming soon", "10"),
-      getItem("Comming soon", "11"),
-      getItem("Comming soon", "12"),
+      // getItem("Comming soon", "10"),
+      // getItem("Comming soon", "11"),
+      // getItem("Comming soon", "12"),
     ]),
     getItem(
       "Attendance",
       "grp",
-      null,
-      [getItem("Attendance List", "13"), getItem("Comming soon", "14")],
-      "group"
+      <CheckOutlined />,
+      [getItem("Attendance List", "13")]
+    ),
+    {
+      type: "divider",
+    },
+    getItem(
+      "Equipments",
+      "grp",
+      <ToolOutlined />,
+      [getItem("Add Equipments", "14"),
+      getItem("Equipments List", "15"),
+      ]
     ),
   ];
 
@@ -154,14 +177,14 @@ export default function MenuHome() {
                   width: "100%", // Adjusted width for responsiveness
                 }}
                 defaultSelectedKeys={selectedKey}
-                defaultOpenKeys={["sub1", "sub2", "sub3", "sub4"]}
+                defaultOpenKeys={["sub1", "sub2", "sub3", "sub4", "grp"]}
                 mode="inline"
                 items={items}
               />
             </div>
             <div className="component-container">
               <Card
-               
+               style={{ backgroundColor: 'rgb(193, 204, 222)' }}
               >
                 {" "}
                 {renderComponent}

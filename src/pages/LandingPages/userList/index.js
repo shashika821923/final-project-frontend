@@ -99,9 +99,9 @@ function UserListing() {
       key: 'actions',
       render: (text, record) => (
         <div style={{display:'flex',gap:'5px'}}>
-          <Button variant="contained" color="primary" onClick={() => handleEdit(record)}>Edit</Button>
-          <Button variant="contained" color="primary" style={{marginLeft: '5 px'}} onClick={() => handelAddPayment(record.userId)}>Add a payment</Button>
-          <Button variant="contained" color="primary" style={{marginLeft: '5 px'}} onClick={() => handelPaymentHistory(record.userId)}>View payments</Button>
+          <Button variant="contained" color="info" onClick={() => handleEdit(record)}>Edit</Button>
+          <Button variant="contained" color="primary" style={{marginLeft: '5 px', color: 'white',}} onClick={() => handelAddPayment(record.userId)}>Add a payment</Button>
+          <Button variant="contained" color="primary" style={{marginLeft: '5 px', color: 'white',}} onClick={() => handelPaymentHistory(record.userId)}>View payments</Button>
           <Button variant="contained" color="error" style={{marginLeft: '5 px'}} onClick={() => handleDelete(record.userId)}>Delete</Button>
         </div>
       ),
