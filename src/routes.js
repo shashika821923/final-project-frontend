@@ -13,7 +13,7 @@ import { UserType } from "configs/enums/userTypes";
 import CreateBlogPostMain from "pages/LandingPages/blogs/formbacking";
 import BlogListing from "pages/LandingPages/blogs/blogging-listing";
 import ReviewForm from "pages/LandingPages/review/review.form";
-
+import RestPassword from "pages/LandingPages/resetpassword/form";
 
 const routes = [
   {
@@ -87,6 +87,11 @@ if(getToken()!= null){
           name: "Blog listing",
           route: "/pages/blog/bloggingPost",
           component: <BlogListing />,
+        },
+        {
+          name: "Reset Password",
+          route: "/pages/password/reset",
+          component: <RestPassword />,
         },
       ],
     },

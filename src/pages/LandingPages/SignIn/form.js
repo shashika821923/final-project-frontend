@@ -58,12 +58,17 @@ function SigningForm({ userID }) {
       },
       validationSchema: validationSchema,
       onSubmit: (values) => {
-        ((userID > 0) ? userInfoService.updateUSer(values) : userInfoService.addNewUserAccount(values)).then((data) => { openNotification(); });
+        ((userID > 0) ? userInfoService.updateUSer(values) : userInfoService.addNewUserAccount(values)).then((data) => { openNotification(data.data.statusCode === 409);  });
       },
     });
   
-    const openNotification = () => {
-      api.success({
+    const openNotification = (failed = false) => {
+      failed ? api.error({
+        message: 'Email Duplicated',
+        description:
+          'You entred Email is already used !',
+        duration: 0,
+      }) :api.success({
         message: 'Success fully added !',
         description:
           'Your user account is successfully created!',

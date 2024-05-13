@@ -9,7 +9,8 @@ export const userInfoService = {
     updateUSer,
     deleteUser,
     newMemberShipRequets,
-    acceptUser
+    acceptUser,
+    resetPassword
 };
 
 function addNewUserAccount(newUserInformation) {
@@ -56,6 +57,12 @@ function newMemberShipRequets() {
 
 function acceptUser(userid) {
     return axios.post(`${config.api.endpoint}/users/acceptUser`, userid).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
+function resetPassword(userid) {
+    return axios.post(`${config.api.endpoint}/users/resetPassword`, userid).then(
         (data) => data,
         (error) => console.log(error));
 }

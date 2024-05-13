@@ -15,13 +15,11 @@ import { userInfoService } from "../SignIn/services";
 import { storeToken } from "configs/jwtTokenImplementations";
 import { notification } from "antd";
 
-
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string().min(5).required("Password is required"),
 });
 
-function LoginForm() {
+function RestPassword() {
   const [api, contextHolder] = notification.useNotification();
   const redirectToPath = (path) => {
     window.location.href = path;
@@ -29,9 +27,8 @@ function LoginForm() {
 
   // Example usage: redirect to '/dashboard' path
   const handleRedirect = () => {
-    redirectToPath('/');
+    redirectToPath("/");
   };
-  
 
   const formik = useFormik({
     initialValues: {
@@ -40,29 +37,27 @@ function LoginForm() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      userInfoService.loginUser(formik.values).then((jwtToken) => {
-        if (jwtToken.data.success) {
-          storeToken(jwtToken.data.token)
-          handleRedirect();
-        }else{
-          openNotification();
-        }
-      })
+      userInfoService.resetPassword(formik.values).then((status) => {
+        openNotification(status.data.success);
+      });
     },
   });
 
-  const openNotification = () => {
-    api.error({
-      message: 'Login Failed!',
-      description:
-        'Your username or password is incorrect',
+  const openNotification = (isSuccess) => {
+    isSuccess ? api.success({
+        message: "Successfull",
+        description: "Your Password rest and new password has been sent to your email",
+        duration: 0,
+      }) :api.error({
+      message: "Unsuccessfull",
+      description: "Your password reset is unsuccessful",
       duration: 0,
     });
   };
 
   return (
     <>
-     {contextHolder}
+      {contextHolder}
       <DefaultNavbar
         routes={routes}
         action={{
@@ -82,7 +77,10 @@ function LoginForm() {
         width="100%"
         minHeight="100vh"
         sx={{
-          backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
+          backgroundImage: ({
+            functions: { linearGradient, rgba },
+            palette: { gradients },
+          }) =>
             `${linearGradient(
               rgba(gradients.dark.main, 0.6),
               rgba(gradients.dark.state, 0.6)
@@ -92,8 +90,21 @@ function LoginForm() {
           backgroundRepeat: "no-repeat",
         }}
       />
-      <MKBox px={1} width="100%" height="100vh" mx="auto" position="relative" zIndex={2}>
-        <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
+      <MKBox
+        px={1}
+        width="100%"
+        height="100vh"
+        mx="auto"
+        position="relative"
+        zIndex={2}
+      >
+        <Grid
+          container
+          spacing={1}
+          justifyContent="center"
+          alignItems="center"
+          height="100%"
+        >
           <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
             <Card>
               <MKBox
@@ -107,8 +118,13 @@ function LoginForm() {
                 mb={1}
                 textAlign="center"
               >
-                <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                  Reset Password
+                <MKTypography
+                  variant="h4"
+                  fontWeight="medium"
+                  color="white"
+                  mt={1}
+                >
+                  Sign In
                 </MKTypography>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>
@@ -122,58 +138,23 @@ function LoginForm() {
                       value={formik.values.email}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
-                      error={formik.touched.email && Boolean(formik.errors.email)}
+                      error={
+                        formik.touched.email && Boolean(formik.errors.email)
+                      }
                       helperText={formik.touched.email && formik.errors.email}
                     />
                   </MKBox>
-                  <MKBox mb={2}>
-                    <MKInput
-                      type="password"
-                      label="Password"
-                      fullWidth
-                      name="password"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={formik.touched.password && Boolean(formik.errors.password)}
-                      helperText={formik.touched.password && formik.errors.password}
-                    />
-                  </MKBox>
                   <MKBox mt={4} mb={1}>
-                    <MKButton type="submit" variant="gradient" color="info" fullWidth>
-                      Sign In
+                    <MKButton
+                      type="submit"
+                      variant="gradient"
+                      color="info"
+                      fullWidth
+                    >
+                      Rest Password
                     </MKButton>
                   </MKBox>
-                  <MKBox mt={3} mb={1} textAlign="center">
-                    <MKTypography variant="button" color="text">
-                      Don&apos;t have an account?{" "}
-                      <MKTypography
-                        component={Link}
-                        to="/pages/authentication/sign-in"
-                        variant="button"
-                        color="info"
-                        fontWeight="medium"
-                        textGradient
-                      >
-                        Sign up
-                      </MKTypography>
-                    </MKTypography>
-                  </MKBox>
-                  <MKBox mt={3} mb={1} textAlign="center">
-            { <MKTypography variant="button" color="text">
-              Forgot password?{" "}
-              <MKTypography
-                component={Link}
-                to="/pages/password/reset"
-                variant="button"
-                color="info"
-                fontWeight="medium"
-                textGradient
-              >
-                Reset Password
-              </MKTypography>
-            </MKTypography>}
-          </MKBox>
+                 
                 </form>
               </MKBox>
             </Card>
@@ -187,4 +168,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default RestPassword;
