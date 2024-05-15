@@ -49,6 +49,7 @@ function Information() {
               date={moment(review.postedDateTime).format("YYYY-MM-DD HH:mm:ss")}
               review={review.review}
               color="info"
+              userId={review.userId}
             />
           </Grid>)}
         </Grid>

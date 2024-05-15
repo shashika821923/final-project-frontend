@@ -10,9 +10,23 @@ import Icon from "@mui/material/Icon";
 import MKBox from "components/MKBox";
 import MKAvatar from "components/MKAvatar";
 import MKTypography from "components/MKTypography";
-import { CalendarOutlined } from "@ant-design/icons";
+import { CalendarOutlined, DeleteOutlined } from "@ant-design/icons";
+import { getToken } from "configs/jwtTokenImplementations";
+import { useEffect, useState } from "react";
+import { decodeToken } from "react-jwt";
+import { UserType } from "configs/enums/userTypes";
 
-function DefaultReviewCard({ color, image, name, date, review, rating }) {
+function DefaultReviewCard({ color, image, name, date, review, rating, userId }) {
+   const token = getToken();
+   const [loggedUserId, setLoggedUserId] =  useState(null) ;
+
+   useEffect(() => {
+    if(token != null){
+      setLoggedUserId (decodeToken(token));
+    }
+    console.log(userId)
+   }, [token]);
+
   const ratings = {
     0.5: [
       <Icon key={1}>star_outline</Icon>,
@@ -166,6 +180,7 @@ function DefaultReviewCard({ color, image, name, date, review, rating }) {
         }}
       >
         {ratings[rating]}
+        {((loggedUserId?.userId != null && loggedUserId?.userId === userId) || ( loggedUserId?.userType === UserType.ADMIN) )&& <span><DeleteOutlined /></span>}
       </MKTypography>
     </MKBox>
   );

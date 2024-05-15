@@ -140,6 +140,12 @@ function getAllBlogPosts(appointmentDetails) {
         (error) => console.log(error));
 }
 
+function deleteBlogs(appointmentDetails) {
+    return axios.post(`${config.api.endpoint}/blogging/deleteBlogs`, appointmentDetails).then(
+        (data) => data,
+        (error) => console.log(error));
+}
+
 export const attendanceServices = {
     getFilteredAttendancesList
 }
